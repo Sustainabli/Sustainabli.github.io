@@ -58,9 +58,9 @@ scrollOnClick(".nav-link")
 
 //Instruct user to scroll
 function hideScroll(event){
+    let scrollel = document.querySelector(".scroller")
     let el = document.querySelector("#arrow")
-    console.log(event.target)
-    if (event.target.scrollTop === 0){
+    if (scrollel.scrollTop === 0){
         el.classList.add('arrow-pulse')
     } else {
         el.classList.remove('arrow-pulse')
