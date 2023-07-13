@@ -1,4 +1,5 @@
 `use strict`
+
 //Reveal animation
 function scrollTrigger(selector){
     let els = document.querySelectorAll(selector)
@@ -44,7 +45,6 @@ function textAnimate(el){
 scrollTrigger('.scroll-reveal')
 
 // Auto scroll
-
 function scrollOnClick(selector){
     let els = document.querySelectorAll(selector)
     els = Array.from(els)
@@ -57,22 +57,43 @@ function scrollOnClick(selector){
 scrollOnClick(".nav-link")
 
 //Instruct user to scroll
-function pulseElmStart(selector){
-    let el = document.querySelector(selector)
-    el.classList.toggle('arrow-pulse')
-    let task = () => el.classList.toggle(`arrow-pulse`) 
-    setTimeout(task, 3000)
-}
-
-pulseElmStart('#arrow-text')
+document.querySelector(".scroller").addEventListener("scrollend", (event) => {
+    let el = document.querySelector("#arrow")
+    console.log(event.target.scrollTop)
+    if (event.target.scrollTop === 0){
+        el.classList.add('arrow-pulse')
+    } else {
+        el.classList.remove('arrow-pulse')
+    }
+})
 
 // Nav bar
-document.querySelector("#nav-tree").addEventListener("mouseover", () => {
+function showNav(){
     document.querySelector("#nav-icon").classList.toggle("nav-visible", false)
     document.querySelector("#nav-links").classList.toggle("nav-visible", true)
+}
+
+function hideNav(){
+    document.querySelector("#nav-icon").classList.toggle("nav-visible", true)
+    document.querySelector("#nav-links").classList.toggle("nav-visible", false)
+}
+
+document.querySelector("#nav-tree").addEventListener("mouseover", () => {
+    showNav()
+})
+
+document.querySelector("#nav-tree").addEventListener("touchstart", () => {
+    showNav()
 })
 
 document.querySelector("#nav-tree").addEventListener("mouseleave", () => {
-    document.querySelector("#nav-icon").classList.toggle("nav-visible", true)
-    document.querySelector("#nav-links").classList.toggle("nav-visible", false)
+    hideNav()
+})
+
+//Not compute effient but best solution I could think of
+document.querySelector("html").addEventListener("click", (env) => {
+    console.log(env.target)
+    if (env.target.classList.contains("nav-link")){
+        hideNav()
+    }
 })
