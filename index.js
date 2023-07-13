@@ -57,15 +57,24 @@ function scrollOnClick(selector){
 scrollOnClick(".nav-link")
 
 //Instruct user to scroll
-document.querySelector(".scroller").addEventListener("scrollend", (event) => {
+function hideScroll(event){
     let el = document.querySelector("#arrow")
-    console.log(event.target.scrollTop)
+    console.log(event.target)
     if (event.target.scrollTop === 0){
         el.classList.add('arrow-pulse')
     } else {
         el.classList.remove('arrow-pulse')
     }
+
+}
+document.querySelector(".scroller").addEventListener("scrollend", (event) => {
+    hideScroll(event)
 })
+
+document.querySelector(".scroller").addEventListener("touchend", (event) => {
+    hideScroll(event)
+})
+
 
 // Nav bar
 function showNav(){
@@ -92,7 +101,6 @@ document.querySelector("#nav-tree").addEventListener("mouseleave", () => {
 
 //Not compute effient but best solution I could think of
 document.querySelector("html").addEventListener("click", (env) => {
-    console.log(env.target)
     if (env.target.classList.contains("nav-link")){
         hideNav()
     }
